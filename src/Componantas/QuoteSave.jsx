@@ -1,85 +1,113 @@
-import { useEffect, useState } from "react";
+// src/Componantas/QuoteSave.jsx
+import React, { useEffect, useState } from "react";
 import css from "./QuoteSave.module.css";
 import { MdDelete } from "react-icons/md";
 import Buttons from "./Buttons";
+import { isLoggedIn, authFetch } from "../auth";
 
-const QuoteSave = ({ qoute, author, savee, setSave, setRed }) => {
-  const [quoteAthor, setQuoteAthor] = useState([]);
-  const [showButton, setShowButtons] = useState({});
+const QuoteSave = ({ setRed, requestAuth }) => {
+  const [quoteList, setQuoteList] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [showButtonsIndex, setShowButtonsIndex] = useState(null);
+
+  const fetchSaved = async () => {
+    if (!isLoggedIn()) {
+      if (typeof requestAuth === "function") requestAuth();
+      return;
+    }
+    setLoading(true);
+    try {
+      const res = await authFetch("/api/quotes");
+      if (!res.ok) throw new Error("Failed to load saved quotes");
+      const data = await res.json();
+      setQuoteList(data || []);
+    } catch (err) {
+      console.error("Fetch saved error:", err);
+      setQuoteList([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const savedQuotes = JSON.parse(localStorage.getItem("quotes_key")) || [];
-    setQuoteAthor(savedQuotes);
+    fetchSaved();
+    const onUpdate = () => fetchSaved();
+    window.addEventListener("quotesUpdated", onUpdate);
+    return () => window.removeEventListener("quotesUpdated", onUpdate);
   }, []);
 
-  useEffect(() => {
-    if (savee && qoute && author) {
-      const savedQuotes = JSON.parse(localStorage.getItem("quotes_key")) || [];
+  const handleDelete = async (id, quoteText) => {
+    if (!window.confirm("Delete this quote?")) return;
+    if (!isLoggedIn()) {
+      if (typeof requestAuth === "function") requestAuth();
+      return;
+    }
 
-      // Check if the quote already exists in localStorage
-      if (!savedQuotes.some((item) => item.qoute === qoute)) {
-        const updatedQuotes = [{ qoute, author }, ...savedQuotes];
+    try {
+      const res = await authFetch(`/api/quotes/${id}`, { method: "DELETE" });
+      if (!res.ok) throw new Error("Delete failed");
 
-        // Update state and localStorage
-        setQuoteAthor(updatedQuotes);
-        localStorage.setItem("quotes_key", JSON.stringify(updatedQuotes));
+      setQuoteList((prev) => prev.filter((q) => q._id !== id));
+      if (quoteText) {
+        window.dispatchEvent(
+          new CustomEvent("quoteDeleted", { detail: { qoute: quoteText, id } })
+        );
       }
-
-      setSave(false);
-      setRed(true); // Keep heart red when quote is saved
-    }
-  }, [savee]);
-
-  const handleDelete = (quoteToDelete) => {
-    const updatedQuotes = quoteAthor.filter(
-      (item) => item.qoute !== quoteToDelete
-    );
-    setQuoteAthor(updatedQuotes);
-    localStorage.setItem("quotes_key", JSON.stringify(updatedQuotes));
-
-    if (quoteToDelete === qoute) {
-      setRed(false); // Turn heart black when deleted
+    } catch (err) {
+      console.error("Delete error:", err);
+      alert("Could not delete quote. Try again.");
     }
   };
 
-  const handleShareButton = (index) => {
-    setShowButtons((prev) => ({ ...prev, [index]: !prev[index] }));
-  };
+  const toggleShare = (index) =>
+    setShowButtonsIndex((prev) => (prev === index ? null : index));
 
   return (
-    <div className="row p-3">
-      <h1>Saved Quotes</h1>
+    <div className={`p-3 ${css.savedQuotesContainer}`}>
+      <h2 style={{ textAlign: "center" }}>Saved Quotes</h2>
 
-      <ul className={css.quoteGrid}>
-        {quoteAthor.length === 0 ? (
-          <li>No quotes saved yet.</li>
-        ) : (
-          quoteAthor.map((item, index) => (
-            <li key={index} className={`${css.savedQuote} `}>
-              <strong>"{item.qoute}"</strong>
-              <br /> - {item.author}
-              <div className={`${css.buttonContainer}`}>
+      {loading ? (
+        <p>Loading saved quotes...</p>
+      ) : quoteList.length === 0 ? (
+        <p>No saved quotes yet.</p>
+      ) : (
+        <ul className={css.quoteGrid}>
+          {quoteList.map((item, index) => (
+            <li key={item._id} className={css.savedQuote}>
+              <div className={css.quoteBody} aria-live="polite">
+                <blockquote>
+                  <strong>&quot;{item.qoute}&quot;</strong>
+                </blockquote>
+                <div className={css.meta}>— {item.author}</div>
+              </div>
+
+              <div className={css.buttonContainer}>
                 <button
                   className={css.deleteButton}
-                  onClick={() => handleDelete(item.qoute)}
+                  title="Delete"
+                  aria-label="Delete quote"
+                  onClick={() => handleDelete(item._id, item.qoute)}
                 >
                   <MdDelete />
                 </button>
-                {!showButton[index] ? (
+
+                {showButtonsIndex === index ? (
+                  <Buttons qoute={item.qoute} author={item.author} />
+                ) : (
                   <button
-                    onClick={() => handleShareButton(index)}
-                    className={`${css.shareButton}`}
+                    className={css.shareButton}
+                    title="Share"
+                    aria-label={`Share quote ${index + 1}`}
+                    onClick={() => toggleShare(index)}
                   >
                     Share
                   </button>
-                ) : (
-                  <Buttons qoute={item.qoute} author={item.author} />
                 )}
               </div>
             </li>
-          ))
-        )}
-      </ul>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };

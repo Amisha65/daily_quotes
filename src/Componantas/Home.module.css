@@ -1,189 +1,218 @@
+/* Home.module.css (cleaned) */
 @import url('https://fonts.googleapis.com/css2?family=Playfair:ital,opsz,wght@0,5..1200,300..900;1,5..1200,300..900&display=swap');
 
-*{
-    font-family: "Playfair", serif;
-    font-optical-sizing: auto;
-    font-style: normal;
-    font-variation-settings:"wdth" 100;
+* {
+  font-family: "Playfair", serif;
+  box-sizing: border-box;
 }
 
-body{
-    background-color: rgb(193, 243, 243);
+body {
+  background-color: rgb(193, 243, 243);
 }
 
-.mainContainer{
-    display: grid;
-    display: flex;
-    place-items: center;
-    min-height: 100vh;
-    
-}
-.roww{
-    width: 90vb;
-    background-color: white;
+/* layout */
+.mainContainer {
+  display: flex;
+  place-items: center;
+  min-height: 100vh;
 }
 
-.heading h1{
-    font-size: 4rem;
-    position: relative;
+/* Card (white box) */
+.roww {
+  width: 90vw;
+  max-width: 900px;
+  background-color: white;
+  position: relative;
+  overflow: visible;
+  border-radius: 4px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  margin-top: 3.8em;
 }
 
-
-.heading h1::after{
-    content: '';
-    width: 200px;
-    height: 3px;
-    border-radius: 3px;
-    background: rgb(23,124,229);
-    position: absolute;
-    top: 70px;
-    left: 50%;
-    transform: translateX(-50%); 
+/* padded inner content so icons are absolute */
+.cardInner {
+  padding: 2.5rem 3rem;
 }
 
-#qoute{
-    font-size: 2rem;
-    display: flex;
-    justify-content: center;
-    padding-top: 20px;
+/* Heading */
+.heading {
+  text-align: center;
 }
 
-#author{
-    font-size: 1.5rem;
-    display: block;
-    float: right;
-    position: relative;
+.heading h1 {
+  margin: 0;
+  font-size: 3rem;
+  line-height: 1.08;
+  position: relative;
+  white-space: nowrap;
+  display: inline-block;
+  padding-bottom: 0.45em;
 }
 
-#author::before{
-    content: '';
-    width: 20px;
-    height: 2px;
-    background: rgb(23,124,229);
-    position: absolute;
-    top:50%;
-    left: -30px;
-
+.heading h1::after {
+  content: "";
+  width: 180px;
+  height: 3px;
+  background: rgb(23,124,229);
+  border-radius: 3px;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
-.quoteButtons button{
-    border-radius: 1rem;
-    border-color: rgb(23,124,229);
-    padding: 0.75rem;
-    background-color:rgb(23,124,229);
-    color:azure;
-    font-size: 1.25rem;
-    cursor: pointer;
-} 
-
-.quoteButtons button:active{
-    box-shadow: inset;
-    background-color:rgb(113, 171, 234);
+/* Quote and author */
+#qoute {
+  font-size: clamp(1.05rem, 2.2vw + 0.4rem, 1.8rem);
+  line-height: 1.6;
+  display: flex;
+  justify-content: center;
+  padding-top: 20px;
+  max-height: 220px;
+  overflow-y: auto;
+  margin: 0 1rem;
+  text-align: center;
+  transition: font-size 160ms ease-in-out;
 }
 
-
-.homeShareButtond { 
-    border-radius: 1rem;
-    border-color: rgb(23,124,229);
-    padding: 0.75rem;
-    font-size: 1.25rem;
-    cursor: pointer;
-    background-color:rgb(255, 255, 255);
-    color: rgb(23,124,229);
-    display: flex;
-    align-items: center;
-    gap: 5px;
+#author {
+  font-size: clamp(0.95rem, 1.4vw + 0.3rem, 1.35rem);
+  display: block;
+  float: right;
+  position: relative;
+  margin-top: 1.25rem;
 }
 
-.loading{
-    border:4px solid rgb(244, 247, 247);
-    border-top: 4px solid rgb(23,124,229);
-    border-right: 4px solid rgb(23,124,229);
-    padding:20px;
-    border-radius:50%;
-    animation: spinAnima 1.5s infinite normal;
-  animation-timing-function: ease-in-out;
+#author::before {
+  content: '';
+  width: 20px;
+  height: 2px;
+  background: rgb(23,124,229);
+  position: absolute;
+  top: 50%;
+  left: -30px;
+  transform: translateY(-50%);
 }
 
-@keyframes spinAnima{
-    0%{
-        transform: rotate(0deg);
-    }100%{
-        transform: rotate(360deg);
-    }
-
+/* controls */
+.quoteButtons button {
+  border-radius: 1rem;
+  border-color: rgb(23,124,229);
+  padding: 0.75rem;
+  background-color: rgb(23,124,229);
+  color: azure;
+  font-size: 1.25rem;
+  cursor: pointer;
 }
 
-.spinner{
-    margin-top: 100px; 
+.homeShareButtond {
+  border-radius: 1rem;
+  border-color: rgb(23,124,229);
+  padding: 0.75rem;
+  font-size: 1.25rem;
+  cursor: pointer;
+  background-color: rgb(255, 255, 255);
+  color: rgb(23,124,229);
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 
-.toSeeSave:hover{
-    color: black;
+/* top-right icons */
+.topRightIcons {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  z-index: 10;
 }
 
-.likeSaveButton {
-    font-size: 1.9em;
-    width: fit-content;
-    position: absolute ;
-    right: 22%;
-    color: rgb(161, 157, 157);
-    
+.icon {
+  font-size: 26px;
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: rgb(120, 120, 120);
+  border-radius: 8px;
+  transition: color .15s, background .15s;
 }
 
-@media (max-width: 2500px) {
-    .likeSaveButton {
-        right: 25%;
-        
-    }
+.icon:hover { color: #333; background: rgba(0,0,0,0.03); }
+
+/* Responsive rules */
+@media (max-width: 520px) {
+  .heading h1 {
+    font-size: 2.15rem;
+    padding-bottom: 0.28em;
+    margin-top: 2rem !important;
+  }
+  .heading h1::after { width: 140px; height: 3px; }
+
+  #qoute {
+    max-height: 180px;
+    padding-top: 14px;
+    font-size: clamp(0.95rem, 3.2vw + 0.2rem, 1.3rem);
+  }
+
+  #author {
+    font-size: clamp(0.85rem, 2.5vw + 0.1rem, 1.0rem);
+    margin-top: 1rem;
+  }
+
+  .quoteButtons button,
+  .homeShareButtond {
+    font-size: 0.95rem !important;
+    padding: 0.55rem 1rem !important;
+    border-radius: 0.8rem !important;
+  }
+
+  .shareButtond button {
+    font-size: 1.2rem !important;
+    padding: 0.35rem 0.45rem !important;
+    border-radius: 0.6rem !important;
+  }
+
+  .gap-4 { gap: 0.8rem !important; }
+
+  .topRightIcons { top: 10px; right: 10px; gap: 8px; }
+  .icon { font-size: 20px; width: 30px; height: 30px; }
 }
 
-@media (max-width: 768px) {
-    .likeSaveButton {
-        right: 0px; 
-       
-    }
+/* Larger screens adjustments */
+@media (min-width: 1200px) {
+  .heading h1 { font-size: 4.2rem; padding-bottom: 0.5em; }
+  .heading h1::after { width: 260px; }
+
+  #qoute {
+    max-height: 260px;
+    font-size: clamp(1.25rem, 1.6vw + 0.9rem, 2.05rem);
+    padding-top: 28px;
+  }
+  #author {
+    font-size: clamp(1.05rem, 1vw + 0.8rem, 1.6rem);
+  }
 }
 
-@media (max-width: 480px) {
-    .likeSaveButton {
-    
-        right: -30px ;
-        
-    }
-    .heading h1{
-        font-size: 2rem;
-        position: relative;
-    }
-    #qoute{
-        font-size: 1.5rem;
-        line-height: 1em;
-    }
-    #author{
-        font-size: 1rem;
-    }
-    .roww{
-        width: 50vb;
-       
-    }
-    .heading h1::after{
-        
-        top: 40px;
-        
-    }
-    .quoteButtons button{
-        font-size: 0.8rem;  
-    } 
-    .homeShareButtond { 
-        padding: 0.75rem;
-        font-size: 0.8rem;  
-    }
-    .roww{
-        width: 60vb;
-        
-    }
-   
-    
+.logoutBtn {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  background: #ffffff;
+  border: 2px solid #d3d3d3;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s;
+  font-weight: 600;
 }
 
-
+.logoutBtn:hover {
+  background: #f3f3f3;
+  border-color: #bfbfbf;
+}

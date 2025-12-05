@@ -1,80 +1,133 @@
- h1{
-    font-size: 4rem;
-    position: relative;
-    text-align: center;
-    padding-top: 0px;
+/* QuoteSave.module.css — cleaned */
+
+.savedQuotesContainer {
+  background: #fff;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
 }
 
-
- h1::after{
-    content: '';
-    width: 200px;
-    height: 3px;
-    border-radius: 3px;
-    background: rgb(23,124,229);
-    position: absolute;
-    top: 70px;
-    left: 50%;
-    transform: translateX(-50%); 
-}
-
-
-/* Grid Layout for Saved Quotes */
+/* Grid of saved quotes */
 .quoteGrid {
-    margin-top: 10px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(325px, 1fr)); /* 3 per row */
-    gap: 35px;
-    list-style-type: none;
-    padding: 10px;
-    margin:10px;
-    justify-content: center;
-    
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
 }
 
-/* Individual Quote Box */
+/* Individual saved item */
 .savedQuote {
-    border: 2px solid rgb(219, 216, 216) ;
-    padding: 15px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
-    min-height: 180px;
-    
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: #fafafa;
+  border-radius: 8px;
+  padding: 0.9rem;
+  min-height: 120px;
+  position: relative;
+  transition: transform 120ms ease, box-shadow 120ms ease;
 }
 
-/* Button Alignment */
+.savedQuote:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+}
+
+/* Quote text area */
+.quoteBody {
+  margin-bottom: 0.65rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.quoteBody blockquote {
+  margin: 0;
+  font-style: normal;
+  line-height: 1.45;
+  font-weight: 500;
+}
+
+/* Meta / author line */
+.meta {
+  margin-top: 0.6rem;
+  font-size: 0.95rem;
+  color: #555;
+  text-align: right;
+}
+
+/* Container for action buttons (delete + share) */
 .buttonContainer {
-    display: flex;
-    justify-content:end;
-    align-items: center;
-    gap:10px;
-    margin-top: 10px;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: flex-end;
 }
 
+/* Delete button */
 .deleteButton {
-  
-    color: rgb(8, 8, 8);
-    border-color: rgb(23,124,229);
-    padding: 8px 12px;
-    border-radius: 5px;
-    cursor: pointer;
+  border: 0;
+  background: transparent;
+  padding: 0.45rem;
+  border-radius: 6px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #b02a37;
+  transition: background 120ms ease, transform 80ms ease;
 }
 
+.deleteButton:hover {
+  background: rgba(176, 42, 55, 0.08);
+  transform: translateY(-1px);
+}
+
+/* Inline share button shown when Buttons component is hidden */
 .shareButton {
-
-    color: rgb(16, 16, 16);
-    border-color: rgb(23,124,229);
-    padding: 8px 12px;
-    border-radius: 5px;
-    cursor: pointer;
+  border: 1px solid rgb(23,124,229);
+  background: #fff;
+  color: rgb(23,124,229);
+  padding: 0.5rem 0.65rem;
+  border-radius: 0.6rem;
+  cursor: pointer;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: box-shadow 120ms ease, transform 80ms ease;
 }
 
-@media (max-width: 480px) {
-    h1{
-        font-size: 2rem;
-        position: relative;
-    }
-    h1::after{
-        top: 40px;  
-    }
+.shareButton:hover {
+  box-shadow: 0 6px 14px rgba(23, 124, 229, 0.12);
+  transform: translateY(-1px);
+}
+
+/* Fallback for the external Buttons share group when rendered inside this module */
+.shareButtond {
+  display: inline-flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+/* Responsive tweaks */
+@media (max-width: 640px) {
+  .quoteGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .savedQuote {
+    min-height: 100px;
+    padding: 0.75rem;
+  }
+
+  .meta {
+    font-size: 0.9rem;
+  }
+
+  .shareButton {
+    padding: 0.45rem 0.55rem;
+    font-size: 0.95rem;
+  }
 }

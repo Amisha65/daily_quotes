@@ -1,72 +1,76 @@
 import { GoHeartFill } from "react-icons/go";
 import { TbBrandAppgallery } from "react-icons/tb";
-import css from "./Home.module.css";
 import { IoIosArrowBack } from "react-icons/io";
+import css from "./Home.module.css";
 
 const SaveLike = ({
-  qoute,
-  setSave,
+  onToggleLike,
   setToShowSaved,
   toShowSaved,
   red,
-  setRed,
+  isLoggedIn,
+  requestAuth,
+  onRequestSavedView,
 }) => {
+  // Saved section icon handler
   const handleToShowSaved = () => {
+    if (!isLoggedIn) {
+      onRequestSavedView();
+      return;
+    }
     setToShowSaved(true);
   };
 
+  // Back arrow handler
   const handleGoBack = () => {
-    setToShowSaved(false); // Go back to QouteBody
+    setToShowSaved(false);
   };
 
+  // Heart click handler
   const handleHeartClick = () => {
-    if (qoute) {
-      setSave(true);
+    if (typeof onToggleLike === "function") {
+      onToggleLike();
     }
-    setRed(true);
+
+    if (!isLoggedIn) {
+      requestAuth();
+    }
   };
+
   return (
-    <>
-      <span className="pb-3">
-        {!toShowSaved && (
-          <>
-            <span
-              className={`position-absolute top-5px start-90 translate-middle badge rounded-pill me-5 ${css.likeSaveButton}`}
-            >
-              <TbBrandAppgallery
-                className={css.toSeeSave}
-                onClick={handleToShowSaved} // Show QuoteSave when clicked
-              />
-            </span>
+    <div
+      className={css.topRightIcons}
+      role="toolbar"
+      aria-label="Quote actions"
+    >
+      {!toShowSaved ? (
+        <>
+          <TbBrandAppgallery
+            className={css.icon}
+            onClick={handleToShowSaved}
+            title="View saved quotes"
+            role="button"
+          />
 
-            <span
-              className={`position-absolute top-5px start-90 translate-middle badge rounded-pill ${css.likeSaveButton}`}
-            >
-              <GoHeartFill
-                className={css.likeButton}
-                onClick={handleHeartClick}
-                style={{
-                  color: red
-                    ? "rgba(223, 19, 19, 0.948)"
-                    : "rgb(161, 157, 157)",
-                }}
-              />
-            </span>
-          </>
-        )}
-
-        {toShowSaved && (
-          <span
-            className={`position-absolute top-5px start-90 translate-middle badge rounded-pill ${css.likeSaveButton}`}
-          >
-            <IoIosArrowBack
-              className={css.toSeeSave}
-              onClick={handleGoBack} // Go back to QouteBody when clicked
-            />
-          </span>
-        )}
-      </span>
-    </>
+          <GoHeartFill
+            className={css.icon}
+            onClick={handleHeartClick}
+            style={{
+              color: red ? "rgba(223, 19, 19, 0.948)" : "rgb(161, 157, 157)",
+            }}
+            title={red ? "Unlike" : "Like"}
+            aria-pressed={!!red}
+          />
+        </>
+      ) : (
+        <IoIosArrowBack
+          className={css.icon}
+          onClick={handleGoBack}
+          title="Back to quote"
+          role="button"
+        />
+      )}
+    </div>
   );
 };
 

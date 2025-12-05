@@ -1,0 +1,151 @@
+/* AuthModal.module.css (cleaned - only classes used by AuthModal.jsx) */
+
+/* overlay backdrop */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+/* overlay modal */
+.modal {
+  width: 360px;
+  border-radius: 8px;
+  background: #fff;
+  padding: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+}
+
+/* header (holds tabs + close button) */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+/* Tabs (simple inline tabs as used in JSX) */
+.tab {
+  margin-right: 8px;
+  padding: 6px 12px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 15px;
+  color: #777;
+  border-bottom: 2px solid transparent;
+  transition: color 0.18s ease;
+}
+
+.tab:hover {
+  color: #333;
+}
+
+.activeTab {
+  margin-right: 8px;
+  padding: 6px 12px;
+  font-weight: 600;
+  border-bottom: 2px solid #111;
+  background: transparent;
+  color: #111;
+}
+
+/* close button in header */
+.closeBtn {
+  border: none;
+  background: transparent;
+  font-size: 18px;
+  cursor: pointer;
+  opacity: 0.9;
+}
+
+/* form */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* inputs */
+.input {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #2c7cff;
+  box-shadow: 0 0 6px rgba(44,124,255,0.16);
+}
+
+/* submit button (styled, hover & disabled states) */
+.submitBtn {
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  width: 100%;
+  background: linear-gradient(135deg, #2c7cff, #2466e8);
+  color: white;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 12px rgba(36, 102, 232, 0.25);
+}
+
+.submitBtn:hover {
+  background: linear-gradient(135deg, #1f6aff, #1855d9);
+  box-shadow: 0 6px 16px rgba(36, 102, 232, 0.35);
+}
+
+.submitBtn:active {
+  transform: scale(0.98);
+}
+
+.submitBtn:disabled {
+  background: #dcdcdc;
+  color: #777;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+/* footer text in overlay */
+.footer {
+  margin-top: 8px;
+  text-align: center;
+  color: #666;
+}
+
+/* -------------------
+   Inline card styles (used when inline prop true)
+   ------------------- */
+
+.inlineCard {
+  background: #fff;
+  border-radius: 8px;
+  padding: 14px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+  border: 1px solid #eee;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.inlineHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.inlineFooter {
+  margin-top: 8px;
+  text-align: center;
+  color: #666;
+}
