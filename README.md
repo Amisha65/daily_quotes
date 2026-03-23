@@ -1,35 +1,74 @@
-# **Quote Generator Web App**
+# Daily Quotes
 
-A simple and interactive Quote Generator web app that allows users to fetch random quotes, save favorites, manage their saved list, and share quotes easily.
+A full-stack quote application built with React, Vite, Express, and MongoDB.
 
-## 🌟 **Features**
+Users can:
+- fetch random quotes
+- register and log in
+- save quotes to their account
+- remove saved quotes
+- share quotes
 
-✅ **Fetch Random Quotes** – Get a new quote with a single click.  
-✅ **Save/Unsave Quotes** – Click the heart icon to save/remove a quote.  
-✅ **View Saved Quotes** – Access all saved quotes in a dedicated section.  
-✅ **Share Quotes** – Share quotes via social media or copy to clipboard.  
-✅ **Toggle Between Views** – Seamless switching between main and saved quotes.  
-✅ **Responsive UI** – Built with a clean and mobile-friendly design.
+## Live Demo
 
-## 🛠 **Tech Stack**
+- App: [https://daily-quotes-app-lake.vercel.app](https://daily-quotes-app-lake.vercel.app)
+- Repository: [https://github.com/Amisha65/daily_quotes](https://github.com/Amisha65/daily_quotes)
 
-- **Frontend:** React.js, CSS (Bootstrap & Custom Styles)
-- **API:** Fetching quotes from an external REST API
-- **State Management:** React Hooks (useState, useEffect)
-- **Storage:** Local Storage for saving quotes
+## Tech Stack
 
-## 🔗 **Live Demo & GitHub Repo**
+- Frontend: React, Vite, Bootstrap, CSS Modules
+- Backend: Express, JWT auth, bcrypt
+- Database: MongoDB Atlas with Mongoose
+- Deployment: Vercel
 
-💻 **GitHub Repo:** [GitHub Repository](https://github.com/Amisha65/Daily-Quotes?tab=readme-ov-file#-live-demor)
+## Features
 
-## 📸 **Screenshots**
+- Random quote generation
+- User registration and login
+- Saved quotes per user
+- Quote delete and share actions
+- Responsive layout for desktop and mobile
 
-## 📸 **Screenshots**
+## Local Development
 
-Here’s how the app looks:  
-![App Preview](./assets/screenshot.png)
+### Frontend
 
-## 📌 **Future Enhancements**
+From the project root:
 
-🔹 Dark mode support
-🔹 User authentication for personalized quote saving
+```bash
+npm install
+npm run dev
+```
+
+### Backend
+
+From the `Server` folder:
+
+```bash
+npm install
+node server.js
+```
+
+The backend expects a `Server/.env` file with:
+
+```env
+PORT=5001
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_secret_here
+FRONTEND_ORIGIN=http://localhost:5173
+```
+
+## Production Notes
+
+- Frontend is deployed on Vercel
+- API routes are served through Vercel serverless functions under `/api/*`
+- Production requires `MONGO_URI` and `JWT_SECRET` in Vercel environment variables
+
+## Project Structure
+
+```text
+src/        React frontend
+Server/     Express app, routes, models, middleware
+api/        Vercel serverless API entrypoint
+public/     Static assets
+```
