@@ -1,7 +1,11 @@
 // src/auth.js
 const TOKEN_KEY = "quotes_app_token";
 const USER_KEY = "quotes_app_user";
-const API_BASE_URL = (import.meta.env.VITE_API_URL || "http://localhost:5001").replace(/\/$/, "");
+const explicitApiUrl = import.meta.env.VITE_API_URL?.replace(/\/$/, "");
+const isLocalhost =
+  typeof window !== "undefined" &&
+  ["localhost", "127.0.0.1"].includes(window.location.hostname);
+const API_BASE_URL = explicitApiUrl || (isLocalhost ? "http://localhost:5001" : "");
 
 export function buildApiUrl(url) {
   if (!url) return API_BASE_URL;
