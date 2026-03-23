@@ -1,4 +1,3 @@
-// src/Componantas/QuoteSave.jsx
 import React, { useEffect, useState } from "react";
 import css from "./QuoteSave.module.css";
 import { MdDelete } from "react-icons/md";
@@ -78,31 +77,34 @@ const QuoteSave = ({ setRed, requestAuth }) => {
                 <blockquote>
                   <strong>&quot;{item.qoute}&quot;</strong>
                 </blockquote>
-                <div className={css.meta}>— {item.author}</div>
-              </div>
 
-              <div className={css.buttonContainer}>
-                <button
-                  className={css.deleteButton}
-                  title="Delete"
-                  aria-label="Delete quote"
-                  onClick={() => handleDelete(item._id, item.qoute)}
-                >
-                  <MdDelete />
-                </button>
+                <div className={css.footerRow}>
+                  <div className={css.buttonContainer}>
+                    <button
+                      className={css.deleteButton}
+                      title="Delete"
+                      aria-label="Delete quote"
+                      onClick={() => handleDelete(item._id, item.qoute)}
+                    >
+                      <MdDelete />
+                    </button>
 
-                {showButtonsIndex === index ? (
-                  <Buttons qoute={item.qoute} author={item.author} />
-                ) : (
-                  <button
-                    className={css.shareButton}
-                    title="Share"
-                    aria-label={`Share quote ${index + 1}`}
-                    onClick={() => toggleShare(index)}
-                  >
-                    Share
-                  </button>
-                )}
+                    {showButtonsIndex === index ? (
+                      <Buttons qoute={item.qoute} author={item.author} />
+                    ) : (
+                      <button
+                        className={css.shareButton}
+                        title="Share"
+                        aria-label={`Share quote ${index + 1}`}
+                        onClick={() => toggleShare(index)}
+                      >
+                        Share
+                      </button>
+                    )}
+                  </div>
+
+                  <div className={css.meta}>- {item.author}</div>
+                </div>
               </div>
             </li>
           ))}
