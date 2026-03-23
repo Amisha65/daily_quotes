@@ -63,7 +63,7 @@ const QuoteSave = ({ setRed, requestAuth }) => {
     setShowButtonsIndex((prev) => (prev === index ? null : index));
 
   return (
-    <div className={`p-3 ${css.savedQuotesContainer}`}>
+    <div className={css.savedQuotesContainer}>
       <h2 style={{ textAlign: "center" }}>Saved Quotes</h2>
 
       {loading ? (

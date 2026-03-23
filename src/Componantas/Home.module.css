@@ -15,6 +15,7 @@ body {
   display: flex;
   place-items: center;
   min-height: 100vh;
+  padding: 2.5rem 0 4rem;
 }
 
 /* Card (white box) */
@@ -29,9 +30,28 @@ body {
   margin-top: 3.8em;
 }
 
+.savedView {
+  background: transparent;
+  box-shadow: none;
+  width: min(92vw, 1240px);
+  max-width: 1240px;
+  margin: 0 auto;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 7rem);
+}
+
 /* padded inner content so icons are absolute */
 .cardInner {
   padding: 2.5rem 3rem;
+}
+
+.savedCardInner {
+  padding: 0;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
 }
 
 /* Heading */
@@ -146,6 +166,30 @@ body {
 
 /* Responsive rules */
 @media (max-width: 520px) {
+  .mainContainer {
+    padding: 0;
+  }
+
+  .roww {
+    width: 96vw;
+    margin-top: 4.4em;
+  }
+
+  .cardInner {
+    padding: 1rem 0.75rem;
+  }
+
+  .savedCardInner {
+    padding: 0;
+  }
+
+  .logoutBtn {
+    top: 8px;
+    right: 12px;
+    padding: 5px 12px;
+    font-size: 13px;
+  }
+
   .heading h1 {
     font-size: 2.15rem;
     padding-bottom: 0.28em;
@@ -181,6 +225,19 @@ body {
 
   .topRightIcons { top: 10px; right: 10px; gap: 8px; }
   .icon { font-size: 20px; width: 30px; height: 30px; }
+}
+
+@media (min-width: 521px) {
+  .savedView {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
+@media (max-width: 520px) {
+  .savedView {
+    height: calc(100vh - 5rem);
+  }
 }
 
 /* Larger screens adjustments */

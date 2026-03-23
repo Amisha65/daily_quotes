@@ -1,6 +1,13 @@
 // src/auth.js
 const TOKEN_KEY = "quotes_app_token";
 const USER_KEY = "quotes_app_user";
+const API_BASE_URL = (import.meta.env.VITE_API_URL || "http://localhost:5001").replace(/\/$/, "");
+
+export function buildApiUrl(url) {
+  if (!url) return API_BASE_URL;
+  if (/^https?:\/\//i.test(url)) return url;
+  return `${API_BASE_URL}${url.startsWith("/") ? url : `/${url}`}`;
+}
 
 // store token & user info
 export function setToken(token, user) {
@@ -37,6 +44,6 @@ export async function authFetch(url, opts = {}) {
   if (token) headers["Authorization"] = `Bearer ${token}`;
   headers["Content-Type"] = headers["Content-Type"] || "application/json";
   const options = { ...opts, headers };
-  const res = await fetch(url, options);
+  const res = await fetch(buildApiUrl(url), options);
   return res;
 }

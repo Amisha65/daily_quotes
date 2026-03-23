@@ -1,6 +1,6 @@
 // src/Componantas/AuthModal.jsx
 import { useState } from "react";
-import { setToken } from "../auth";
+import { buildApiUrl, setToken } from "../auth";
 import { IoIosArrowBack } from "react-icons/io";
 
 const AuthModal = ({ onSuccess, onCancel }) => {
@@ -21,7 +21,7 @@ const AuthModal = ({ onSuccess, onCancel }) => {
       const body =
         mode === "login" ? { email, password } : { name, email, password };
 
-      const res = await fetch(path, {
+      const res = await fetch(buildApiUrl(path), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
@@ -41,7 +41,11 @@ const AuthModal = ({ onSuccess, onCancel }) => {
 
       if (!res.ok) {
         // Prefer backend-provided error message, otherwise show status
-        const message = data?.error || `Authentication failed (${res.status})`;
+        const message =
+          data?.error ||
+          (res.status === 404
+            ? "Auth API not found. Make sure the backend server is running on port 5001."
+            : `Authentication failed (${res.status})`);
         setError(message);
         setLoading(false);
         return;
@@ -60,7 +64,7 @@ const AuthModal = ({ onSuccess, onCancel }) => {
       if (typeof onSuccess === "function") onSuccess(data.user);
     } catch (err) {
       console.error("Auth error:", err);
-      setError("Network error");
+      setError("Could not reach the auth server. Make sure the backend is running.");
       setLoading(false);
     }
   };

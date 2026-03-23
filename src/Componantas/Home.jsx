@@ -288,7 +288,7 @@ const Home = () => {
 
       <div className="container d-flex align-items-center justify-content-center">
         <div
-          className={`${css.roww} shadow mb-5`}
+          className={`${css.roww} ${toShowSaved ? css.savedView : "shadow mb-5"}`}
           style={{ position: "relative" }}
         >
           <SaveLike
@@ -304,7 +304,7 @@ const Home = () => {
             requestAuth={requestAuth}
           />
 
-          <div className={css.cardInner}>
+          <div className={`${css.cardInner} ${toShowSaved ? css.savedCardInner : ""}`}>
             {showAuth ? (
               <AuthModal
                 onSuccess={handleAuthSuccess}
